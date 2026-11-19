@@ -1,2 +1,0 @@
-# Add this dependency to the project's existing requirements.txt
-psycopg-pool>=3.2,<4.0

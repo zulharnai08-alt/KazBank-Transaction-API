@@ -1,1 +1,0 @@
-"""KazBank Flask route blueprints."""
