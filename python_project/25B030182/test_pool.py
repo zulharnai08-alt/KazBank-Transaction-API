@@ -1,4 +1,4 @@
-"""Send 20 concurrent GET requests and display shared pool statistics."""
+
 
 import json
 import time
@@ -31,7 +31,7 @@ def main():
     print("Pool stats before load:", before.get("pool_stats", before))
 
     results = []
-    # 20 одновременных запросов к API, который получает соединения из общего пула.
+   
     with ThreadPoolExecutor(max_workers=20) as executor:
         futures = [executor.submit(get_json, "/customers") for _ in range(20)]
         for future in as_completed(futures):
