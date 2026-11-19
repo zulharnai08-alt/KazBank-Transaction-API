@@ -1,4 +1,4 @@
-"""Проверка retry wrapper без изменения банковских балансов."""
+
 from psycopg.errors import SerializationFailure
 
 from app.routes.transfers import with_retry
