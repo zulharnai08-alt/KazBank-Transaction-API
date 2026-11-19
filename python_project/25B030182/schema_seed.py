@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 conn_str = os.getenv("DATABASE_URL")
 
-# создание бд
 
 SCHEMA = [
     """
@@ -38,7 +37,7 @@ SCHEMA = [
     """
 ]
 
-# 10 кастомеров
+
 CUSTOMERS = [
     ("Arman Bekov", "Almaty", "arman@example.com"),
     ("Zarina Seiit", "Astana", "zarina@example.com"),
@@ -52,7 +51,7 @@ CUSTOMERS = [
     ("Sabina Ermek", "Almaty", "sabina@example.com")
 ]
 
-# 15 акков с емаилом
+
 ACCOUNT_DATA = [
     ("arman@example.com", "KZ1000000001", 150000),
     ("arman@example.com", "KZ1000000002", 200000),
@@ -73,11 +72,11 @@ ACCOUNT_DATA = [
 
 with psycopg.connect(conn_str) as conn:
 
-    # создать все 3 таблитцы
+
     for statement in SCHEMA:
         conn.execute(statement)
 
-    # добавить 10 к нему
+
     with conn.cursor() as cur:
         cur.executemany(
             """
@@ -88,7 +87,6 @@ with psycopg.connect(conn_str) as conn:
             CUSTOMERS
         )
 
-    # получить кастомизацию
     rows = conn.execute(
         "SELECT customer_id, email FROM customers"
     ).fetchall()
@@ -103,7 +101,7 @@ with psycopg.connect(conn_str) as conn:
         for email, number, balance in ACCOUNT_DATA
     ]
 
-    # добавление 15 акков
+
     with conn.cursor() as cur:
         cur.executemany(
             """
@@ -116,7 +114,6 @@ with psycopg.connect(conn_str) as conn:
 
     conn.commit()
 
-    # 4. верификация уникальных констант
     conn.execute("SAVEPOINT duplicate_test")
 
     try:
@@ -143,7 +140,7 @@ with psycopg.connect(conn_str) as conn:
     conn.execute("RELEASE SAVEPOINT duplicate_test")
     conn.commit()
 
-    # 5. верификация дат
+
     customer_count = conn.execute(
         "SELECT COUNT(*) FROM customers"
     ).fetchone()[0]
